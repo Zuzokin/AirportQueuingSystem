@@ -1,44 +1,83 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading;
-using System.Threading.Tasks;
-using System.Windows.Forms;
 
 namespace AirportQueuingSystem
 {
     internal class AirportSMO
     {
-        private Random random = new Random();
-        private double averageInterval = 12;
+        private readonly Random random = new Random();
+        private int averageTimeUntilNextPlane = 12;
         private int timeUntilNextPlane;
         private Brigade firstBrigade;
         private Brigade secondBrigade;
-        public List<Plane> PlanesInUse { get; set; }
-        public AirportSMO(int initialNumberOfPlanes, double averageInterval = 12)
+        private StatisticManager statisticManager;
+        public List<Plane> PlanesInUse { get; set; } = new List<Plane>();
+        public AirportSMO(int initialNumberOfPlanes, int averageInterval = 12)
         {
-            this.averageInterval = averageInterval;
+            averageTimeUntilNextPlane = averageInterval;
 
             for (int i = 0; i < initialNumberOfPlanes; i++)
             {
-                PlanesInUse.Append(new Plane());
+                PlanesInUse.Add(new Plane());
             }
 
-            firstBrigade = new Brigade();
-            secondBrigade = new Brigade();                 
+            firstBrigade = new Brigade(averageServeTime: 8);
+            secondBrigade = new Brigade(averageServeTime: 6);
+
+            statisticManager = new StatisticManager();
+
+            timeUntilNextPlane = UpdateTimeInterval(averageInterval);
         }
         public void SimulateTick()
         {
             if (timeUntilNextPlane == 0)
             {
-                GetRandomPlane();
+                firstBrigade.Queue.AddPlane(GetRandomPlane());
+                timeUntilNextPlane = UpdateTimeInterval(averageTimeUntilNextPlane);
             }
+
+            if (firstBrigade.Status == BrigadeStatus.Working && firstBrigade.TimeUntilAircraftServiced == 0)
+            {
+                secondBrigade.Queue.AddPlane(firstBrigade.StopServePlane());
+            }
+            if (firstBrigade.Status == BrigadeStatus.Waiting && !firstBrigade.Queue.IsEmpty)
+            {
+                firstBrigade.StartServePlane(firstBrigade.Queue.GetPlaneFromQueue());
+                firstBrigade.TimeUntilAircraftServiced = UpdateTimeInterval(firstBrigade.averageServeTime);
+            }
+
+            if (secondBrigade.Status == BrigadeStatus.Working && secondBrigade.TimeUntilAircraftServiced == 0)
+            {
+                PlanesInUse.Add(secondBrigade.StopServePlane());
+            }
+            if (secondBrigade.Status == BrigadeStatus.Waiting && !secondBrigade.Queue.IsEmpty)
+            {
+                secondBrigade.StartServePlane(secondBrigade.Queue.GetPlaneFromQueue());
+                secondBrigade.TimeUntilAircraftServiced = UpdateTimeInterval(secondBrigade.averageServeTime);
+            }
+
+            UpdateTime();
         }
 
-        public Plane GetRandomPlane()
+        private Plane GetRandomPlane()
         {
-            return PlanesInUse.OrderBy(x => random.Next()).First();
+            var randomPlane = PlanesInUse.OrderBy(x => random.Next()).First();
+            PlanesInUse.Remove(randomPlane);
+            return randomPlane;
+        }
+
+        private void UpdateTime()
+        {
+            timeUntilNextPlane--;
+            firstBrigade.TimeUntilAircraftServiced--;
+            secondBrigade.TimeUntilAircraftServiced--;
+        }
+
+
+        private int UpdateTimeInterval(int timeInterval)
+        {
+            return GenerateRandomNumberInPoissonDistribution(timeInterval);
         }
 
         private int GenerateRandomNumberInPoissonDistribution(double lambda)

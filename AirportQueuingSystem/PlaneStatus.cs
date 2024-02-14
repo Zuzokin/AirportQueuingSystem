@@ -1,15 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace AirportQueuingSystem
+﻿namespace AirportQueuingSystem
 {
     public enum PlaneStatus
     {
         InUse,
-        UnderMaintenance,
-        InQueue
+        InFirstBrigade,
+        InFirstBrigadeQueue,       
+        InSecondBrigade,
+        InSecondBrigadeQueue,
     }
 }

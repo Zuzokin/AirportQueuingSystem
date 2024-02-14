@@ -1,21 +1,17 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 
 namespace AirportQueuingSystem
 {
     internal class BrigadeQueue
     {
-        private bool isEmpty = true;
+        public bool IsEmpty { get; set; } = true;
 
-        private readonly Queue<Plane> queue;
+        private readonly Queue<Plane> queue = new Queue<Plane>();
 
         public void AddPlane(Plane plane)
         {
             queue.Enqueue(plane);
-            isEmpty = false;
+            IsEmpty = false;
         }
 
         public Plane GetPlaneFromQueue()
@@ -23,7 +19,7 @@ namespace AirportQueuingSystem
             var returnPlane = queue.Dequeue();
             if (queue.Count == 0)
             {
-                isEmpty = true;
+                IsEmpty = true;
             }
             return returnPlane;
         }

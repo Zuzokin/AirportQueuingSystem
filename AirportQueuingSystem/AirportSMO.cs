@@ -12,6 +12,9 @@ namespace AirportQueuingSystem
         private Brigade firstBrigade;
         private Brigade secondBrigade;
         private StatisticManager statisticManager;
+        private PlaneGenerator planeGenerator;
+        private int HoursCounter;
+        private List<Brigade> brigades = new List<Brigade>();
         public List<Plane> PlanesInUse { get; set; } = new List<Plane>();
         public AirportSMO(int initialNumberOfPlanes, int averageInterval = 12)
         {
@@ -28,9 +31,19 @@ namespace AirportQueuingSystem
             statisticManager = new StatisticManager();
 
             timeUntilNextPlane = UpdateTimeInterval(averageInterval);
+
+            brigades.Add(firstBrigade);
+            brigades.Add(secondBrigade);
         }
         public void SimulateTick()
         {
+            statisticManager.UpdateStatistic(
+                PlanesWaitingForService: firstBrigade.Queue.NumberOfPlanes() + secondBrigade.Queue.NumberOfPlanes(),
+                PlanesInServiceSystem: brigades.Count(b => b.Status == BrigadeStatus.Working)
+                );
+
+
+            //todo добавить клапан с логикой проверок
             if (timeUntilNextPlane == 0)
             {
                 firstBrigade.Queue.AddPlane(GetRandomPlane());
@@ -97,13 +110,13 @@ namespace AirportQueuingSystem
             return k - 1;
         }
 
-        private int GenerateRandomNumberInNormalDistribution(double mean, double standardDeviation)
-        {
-            Random random = new Random();
-            double u1 = random.NextDouble();
-            double u2 = random.NextDouble();
-            double randStdNormal = Math.Sqrt(-2.0 * Math.Log(u1)) * Math.Sin(2.0 * Math.PI * u2);
-            return Convert.ToInt32(mean + standardDeviation * randStdNormal);
-        }
+        //private int GenerateRandomNumberInNormalDistribution(double mean, double standardDeviation)
+        //{
+        //    Random random = new Random();
+        //    double u1 = random.NextDouble();
+        //    double u2 = random.NextDouble();
+        //    double randStdNormal = Math.Sqrt(-2.0 * Math.Log(u1)) * Math.Sin(2.0 * Math.PI * u2);
+        //    return Convert.ToInt32(mean + standardDeviation * randStdNormal);
+        //}
     }
 }

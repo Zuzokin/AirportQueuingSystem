@@ -1,0 +1,87 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="AirportQueuingSystem.AirportSMO">
+    <Position X="4.5" Y="0.75" Width="3.5" />
+    <TypeIdentifier>
+      <HashCode>BAAAAAAAABAAEQIQAAAACAAgAAAAQgAAAAUAAAAAQEA=</HashCode>
+      <FileName>AirportSMO.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Field Name="secondBrigade" />
+      <Field Name="statisticManager" />
+      <Field Name="planeGenerator" />
+    </ShowAsAssociation>
+    <ShowAsCollectionAssociation>
+      <Property Name="PlanesInUse" />
+    </ShowAsCollectionAssociation>
+  </Class>
+  <Class Name="AirportQueuingSystem.Brigade">
+    <Position X="10" Y="0.75" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AEAAAgAEAAgAAAAAAAAAAAAARAAAAAAAQAAAAAAAAAA=</HashCode>
+      <FileName>Brigade.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="Status" />
+      <Property Name="Queue" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="AirportQueuingSystem.BrigadeQueue">
+    <Position X="13.25" Y="2.25" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>AABAAAAAEAAAAAAAAABAAAABAAAAAABAAAAAAAAAAAA=</HashCode>
+      <FileName>BrigadeQueue.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="AirportQueuingSystem.StatisticManager" Collapsed="true">
+    <Position X="1.5" Y="2" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>ICBACAACAAAAAAIEAQAgABAAAAAgAAEAGACAACIAAAA=</HashCode>
+      <FileName>StatisticManager.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="AirportQueuingSystem.PlaneGenerator" Collapsed="true">
+    <Position X="1.5" Y="1" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>PlaneGenerator.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="AirportQueuingSystem.Plane">
+    <Position X="9" Y="4.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAEAAAAAAAAAAAAAAAAAAAgAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Plane.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="Status" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="AirportQueuingSystem.Properties.Resources" Collapsed="true">
+    <Position X="2.5" Y="4" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAABEAAAAQAAAAAAAAAAAAAAAIA=</HashCode>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="AirportQueuingSystem.Properties.Settings" Collapsed="true">
+    <Position X="0.5" Y="4" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAIAAAAAABAAAAAAAAAAAAAAA=</HashCode>
+    </TypeIdentifier>
+  </Class>
+  <Enum Name="AirportQueuingSystem.BrigadeStatus">
+    <Position X="13.5" Y="0.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAIQAAAAAA=</HashCode>
+      <FileName>BrigadeStatus.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="AirportQueuingSystem.PlaneStatus">
+    <Position X="11.5" Y="4.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAIAAAAAAAAAAAAAAAAAAAAkAAAAAAAAAACAAAAI=</HashCode>
+      <FileName>PlaneStatus.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>

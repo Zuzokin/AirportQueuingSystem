@@ -11,7 +11,7 @@ namespace AirportQueuingSystem
         public void AddPlane(Plane plane)
         {
             queue.Enqueue(plane);
-            IsEmpty = false;
+            IsEmpty = false;            
         }
 
         public Plane GetPlaneFromQueue()
@@ -22,6 +22,11 @@ namespace AirportQueuingSystem
                 IsEmpty = true;
             }
             return returnPlane;
+        }
+
+        public int NumberOfPlanes()
+        {
+            return queue.Count;
         }
     }
 }

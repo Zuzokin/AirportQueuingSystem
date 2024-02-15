@@ -6,15 +6,8 @@ namespace AirportQueuingSystem
 {
     internal class AirportSMO
     {
-        private readonly Random random = new Random();
-        private int averageTimeUntilNextPlane = 12;
-        private int timeUntilNextPlane;
-        private Brigade firstBrigade;
-        private Brigade secondBrigade;
-        private StatisticManager statisticManager;
-        private PlaneGenerator planeGenerator;
-        private int HoursCounter;
         public List<Plane> PlanesInUse { get; set; } = new List<Plane>();
+        public StatisticManager statisticManager;
         public AirportSMO(int initialNumberOfPlanes, int averageInterval = 12)
         {
             averageTimeUntilNextPlane = averageInterval;
@@ -34,9 +27,18 @@ namespace AirportQueuingSystem
             };
 
             statisticManager = new StatisticManager(brigades);
+            planeGenerator = new PlaneGenerator();
 
             timeUntilNextPlane = UpdateTimeInterval(averageInterval);
+
         }
+
+        private readonly Random random = new Random();
+        private int averageTimeUntilNextPlane = 12;
+        private int timeUntilNextPlane;
+        private Brigade firstBrigade;
+        private Brigade secondBrigade;
+        private PlaneGenerator planeGenerator;
         public void SimulateTick()
         {           
             //todo добавить клапан с логикой проверок
@@ -89,33 +91,7 @@ namespace AirportQueuingSystem
 
         private int UpdateTimeInterval(int timeInterval)
         {
-            return GenerateRandomNumberInPoissonDistribution(timeInterval);
+            return planeGenerator.GenerateRandomNumberInPoissonDistribution(timeInterval);
         }
-
-        private int GenerateRandomNumberInPoissonDistribution(double lambda)
-        {
-            Random rnd = new Random();
-            double L = Math.Exp(-lambda);
-            double p = 1.0;
-            int k = 0;
-
-            do
-            {
-                k++;
-                double u = rnd.NextDouble();
-                p *= u;
-            } while (p >= L);
-
-            return k - 1;
-        }
-
-        //private int GenerateRandomNumberInNormalDistribution(double mean, double standardDeviation)
-        //{
-        //    Random random = new Random();
-        //    double u1 = random.NextDouble();
-        //    double u2 = random.NextDouble();
-        //    double randStdNormal = Math.Sqrt(-2.0 * Math.Log(u1)) * Math.Sin(2.0 * Math.PI * u2);
-        //    return Convert.ToInt32(mean + standardDeviation * randStdNormal);
-        //}
     }
 }

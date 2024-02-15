@@ -1,14 +1,14 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <ClassDiagram MajorVersion="1" MinorVersion="1">
   <Class Name="AirportQueuingSystem.AirportSMO">
-    <Position X="4.5" Y="0.75" Width="3.5" />
+    <Position X="5" Y="0.75" Width="3.5" />
     <TypeIdentifier>
-      <HashCode>BAAAAAAAABAAEQIQAAAACAAgAAAAQgAAAAUAAAAAQEA=</HashCode>
+      <HashCode>AAAAAAAAABAAEQAQAAAACAAgAAAAQgAAAAUAAAAAQAA=</HashCode>
       <FileName>AirportSMO.cs</FileName>
     </TypeIdentifier>
     <ShowAsAssociation>
-      <Field Name="secondBrigade" />
       <Field Name="statisticManager" />
+      <Field Name="secondBrigade" />
       <Field Name="planeGenerator" />
     </ShowAsAssociation>
     <ShowAsCollectionAssociation>
@@ -33,17 +33,17 @@
       <FileName>BrigadeQueue.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="AirportQueuingSystem.StatisticManager" Collapsed="true">
-    <Position X="1.5" Y="2" Width="1.5" />
+  <Class Name="AirportQueuingSystem.StatisticManager">
+    <Position X="2.25" Y="2" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>ICBACAACAAAAAAIEAQAgABAAAAAgAAEAGACAACIAAAA=</HashCode>
+      <HashCode>IABASAACAAAAAAIAAQAwABAAAAAEECEAGAAAACABAAA=</HashCode>
       <FileName>StatisticManager.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="AirportQueuingSystem.PlaneGenerator" Collapsed="true">
-    <Position X="1.5" Y="1" Width="1.5" />
+  <Class Name="AirportQueuingSystem.PlaneGenerator">
+    <Position X="0.5" Y="1" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <HashCode>BAAAAAAAAAAAAAAAAAAAAAABAACAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>PlaneGenerator.cs</FileName>
     </TypeIdentifier>
   </Class>
@@ -58,7 +58,7 @@
     </ShowAsAssociation>
   </Class>
   <Class Name="AirportQueuingSystem.Properties.Resources" Collapsed="true">
-    <Position X="2.5" Y="4" Width="1.5" />
+    <Position X="4.25" Y="4.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAABEAAAAQAAAAAAAAAAAAAAAIA=</HashCode>
     </TypeIdentifier>

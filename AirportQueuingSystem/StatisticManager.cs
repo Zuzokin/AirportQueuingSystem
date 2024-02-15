@@ -22,25 +22,36 @@ namespace AirportQueuingSystem
         private int brigadesDowntime = 0;
         private int totalNumberOfPlanesPassingThroughSystem = 0;
         private int totalNumberOfPlanesWaitingForService = 0;
-        private List<Brigade> brigades;
+        public List<Brigade> Brigades;
 
         public StatisticManager(List<Brigade> brigades)
         {
-            this.brigades = brigades;
+            Brigades = brigades;
+        }
+
+        public (string, string, string, string, string) GetStats()
+        {
+            return (
+                Math.Round(TwoBrigadesWaitingProbability, 3).ToString(),
+                Math.Round(AveragePlanesInServiceSystem, 3).ToString(),
+                Math.Round(AverageServedPlanes, 3).ToString(),
+                Math.Round(AveragePlanesWaitingForService, 3).ToString(),
+                Math.Round(ServiceDayDowntime, 3).ToString()
+                );
         }
 
 
         public void UpdateStatistic()
         {
-            var PlanesWaitingForService = brigades[0].Queue.NumberOfPlanes() + brigades[1].Queue.NumberOfPlanes();
-            var planesInServiceSystem = brigades.Count(b => b.Status == BrigadeStatus.Working);
+            var PlanesWaitingForService = Brigades[0].Queue.NumberOfPlanes() + Brigades[1].Queue.NumberOfPlanes();
+            var planesInServiceSystem = Brigades.Count(b => b.Status == BrigadeStatus.Working);
             var CurrentPlanesInSystem = PlanesWaitingForService + planesInServiceSystem;
-            var isBrigadesWaiting = brigades.Count(b => b.Status == BrigadeStatus.Waiting) == 0;
+            var isBrigadesWaiting = Brigades.Count(b => b.Status == BrigadeStatus.Waiting) == 0;
             if (isBrigadesWaiting)
             {
                 TotalHoursTwoBrigadesWaiting++;
             }
-            brigadesDowntime += brigades.Count(b => b.Status == BrigadeStatus.Waiting);
+            brigadesDowntime += Brigades.Count(b => b.Status == BrigadeStatus.Waiting);
 
             totalNumberOfPlanesPassingThroughSystem += CurrentPlanesInSystem;
             totalNumberOfPlanesWaitingForService += PlanesWaitingForService;
@@ -54,7 +65,6 @@ namespace AirportQueuingSystem
             AveragePlanesWaitingForService = CalculateAveragePlanesWaitingForService();
             ServiceDayDowntime = CalculateServiceDowntime();
         }
-
 
         /// <summary>
         /// Определить вероятность того, что обе бригады будут свободны от обслуживания
@@ -104,9 +114,5 @@ namespace AirportQueuingSystem
             catch (Exception) { return ServiceDayDowntime; }
         }
 
-        public override string ToString()
-        {
-            return base.ToString();
-        }
     }
 }

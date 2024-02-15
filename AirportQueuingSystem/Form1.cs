@@ -11,7 +11,7 @@ namespace AirportQueuingSystem
         {
             InitializeComponent();
             Timer timer1 = new Timer();
-            timer1.Interval = 100;
+            timer1.Interval = 10;
             timer1.Tick += timer1_Tick;
             AirportSMO = new AirportSMO(initialNumberOfPlanes: 120, averageInterval: 12);
         }

@@ -14,7 +14,6 @@ namespace AirportQueuingSystem
         private StatisticManager statisticManager;
         private PlaneGenerator planeGenerator;
         private int HoursCounter;
-        private List<Brigade> brigades = new List<Brigade>();
         public List<Plane> PlanesInUse { get; set; } = new List<Plane>();
         public AirportSMO(int initialNumberOfPlanes, int averageInterval = 12)
         {
@@ -28,21 +27,18 @@ namespace AirportQueuingSystem
             firstBrigade = new Brigade(averageServeTime: 8);
             secondBrigade = new Brigade(averageServeTime: 6);
 
-            statisticManager = new StatisticManager();
+            var brigades = new List<Brigade>
+            {
+                firstBrigade,
+                secondBrigade
+            };
+
+            statisticManager = new StatisticManager(brigades);
 
             timeUntilNextPlane = UpdateTimeInterval(averageInterval);
-
-            brigades.Add(firstBrigade);
-            brigades.Add(secondBrigade);
         }
         public void SimulateTick()
-        {
-            statisticManager.UpdateStatistic(
-                PlanesWaitingForService: firstBrigade.Queue.NumberOfPlanes() + secondBrigade.Queue.NumberOfPlanes(),
-                PlanesInServiceSystem: brigades.Count(b => b.Status == BrigadeStatus.Working)
-                );
-
-
+        {           
             //todo добавить клапан с логикой проверок
             if (timeUntilNextPlane == 0)
             {
@@ -53,6 +49,7 @@ namespace AirportQueuingSystem
             if (firstBrigade.Status == BrigadeStatus.Working && firstBrigade.TimeUntilAircraftServiced == 0)
             {
                 secondBrigade.Queue.AddPlane(firstBrigade.StopServePlane());
+                statisticManager.totalNumberOfServedPlanes++;
             }
             if (firstBrigade.Status == BrigadeStatus.Waiting && !firstBrigade.Queue.IsEmpty)
             {
@@ -63,6 +60,7 @@ namespace AirportQueuingSystem
             if (secondBrigade.Status == BrigadeStatus.Working && secondBrigade.TimeUntilAircraftServiced == 0)
             {
                 PlanesInUse.Add(secondBrigade.StopServePlane());
+                statisticManager.totalNumberOfServedPlanes++;
             }
             if (secondBrigade.Status == BrigadeStatus.Waiting && !secondBrigade.Queue.IsEmpty)
             {
@@ -70,6 +68,7 @@ namespace AirportQueuingSystem
                 secondBrigade.TimeUntilAircraftServiced = UpdateTimeInterval(secondBrigade.averageServeTime);
             }
 
+            statisticManager.UpdateStatistic();
             UpdateTime();
         }
 

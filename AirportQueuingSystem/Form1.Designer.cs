@@ -39,7 +39,7 @@
             // 
             // StartSimulationButton
             // 
-            this.StartSimulationButton.Location = new System.Drawing.Point(431, 114);
+            this.StartSimulationButton.Location = new System.Drawing.Point(34, 40);
             this.StartSimulationButton.Name = "StartSimulationButton";
             this.StartSimulationButton.Size = new System.Drawing.Size(183, 23);
             this.StartSimulationButton.TabIndex = 0;
